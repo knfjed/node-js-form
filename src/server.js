@@ -1,9 +1,16 @@
 var http = require("http");
 var express = require("express");
+var logger = require("morgan");
 var app = express();
 
+// middlewear
 // 静的なファイル名でアクセスされたら、ここから配信
+app.use(logger("dev"));
 app.use(express.static(__dirname + "/public"));
+app.use((req, res, next) => {
+  console.log("Nice to meet you!");
+  next();
+});
 
 //プレースホルダー
 app.get("/users/:name?", (req, res) => {
